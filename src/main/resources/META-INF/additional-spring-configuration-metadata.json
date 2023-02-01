@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "web3j.client-address",
+    "type": "java.lang.String",
+    "description": "The client address for the web3j"
+  },
+  {
+    "name": "wallet.directory.path",
+    "type": "java.lang.String",
+    "description": "The path where to store the created wallets"
+  },
+  {
+    "name": "ganache.account.privatekey",
+    "type": "java.lang.String",
+    "description": "Private key from ganache account to make deposits"
+  }
+]}
