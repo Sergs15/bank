@@ -1,23 +1,25 @@
 package com.sergs.bank.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.sergs.bank.exception.EntityNotFoundException;
 import com.sergs.bank.model.dto.WalletDto;
 import com.sergs.bank.service.WalletService;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 @WebMvcTest(controllers = WalletController.class)
+@WithMockUser(username = "user1")
 public class WalletControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -38,8 +40,8 @@ public class WalletControllerTest {
     }
 
     @Test
-    @DisplayName("User not found in database")
-    public void getUserByIdTest_NotFound() throws Exception{
+    @DisplayName("Wallet not found in database")
+    public void getWalletByIdTest_NotFound() throws Exception{
         Mockito.when(service.getWallet(1L)).thenThrow(new EntityNotFoundException());
 
         mockMvc.perform(get("/wallets/1"))

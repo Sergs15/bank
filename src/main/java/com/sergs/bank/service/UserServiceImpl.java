@@ -1,5 +1,10 @@
 package com.sergs.bank.service;
 
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.sergs.bank.exception.ConstraintViolationException;
@@ -16,16 +21,23 @@ import lombok.extern.log4j.Log4j2;
 @Service
 @Log4j2
 @AllArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository repository;
 
     private final UserMapper mapper;
 
     @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserEntity user = repository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found: " + username));
+        return User.withUsername(username).password(user.getPassword()).authorities("ROLE_ADMIN").build();
+    }
+
+    @Override
     public void createUser(NewUserDto dto) {
         checkIfUsernameAlreadyExists(dto.getUsername());
         checkIfEmailAlreadyExists(dto.getEmail());
+        encryptPassword(dto);
         repository.save(mapper.toEntity(dto));
     }
 
@@ -66,6 +78,10 @@ public class UserServiceImpl implements UserService {
             log.error("Username already in use during user creation: " + username);
             throw new ConstraintViolationException("This username is already in use: " + username);
         }
+    }
+
+    private void encryptPassword(NewUserDto dto){
+        dto.setPassword(new BCryptPasswordEncoder(8).encode(dto.getPassword()));
     }
     
 }
