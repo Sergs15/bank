@@ -2,7 +2,6 @@ package com.sergs.bank.service;
 
 import static org.mockito.Mockito.times;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -15,8 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.web3j.crypto.Credentials;
-import org.web3j.crypto.WalletUtils;
 
 import com.sergs.bank.model.dto.NewWalletDto;
 import com.sergs.bank.model.dto.TransactionResumeDto;
