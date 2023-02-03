@@ -1,8 +1,8 @@
-#Bank API
+# Bank API
 
 A small API created to simulate transactions in a Blockchain enviroment.
 
-##Getting Started
+## Getting Started
 
 A Ehtereum simulator is needed to run the application. We can use Ganache (https://trufflesuite.com/ganache/) for that purpose.
 
@@ -17,7 +17,7 @@ Login credentials:
 http://localhost:8080 displays the OpenApi interface with all the operations available.
 http://localhost:8080/h2-console displays the console for the h2 in memory database used.
 
-##License
+## License
 
 Copyright 2023 Sergio Martínez Fernández
 
